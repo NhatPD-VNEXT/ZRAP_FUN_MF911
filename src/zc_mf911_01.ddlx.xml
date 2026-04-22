@@ -3,9 +3,11 @@
  <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
   <asx:values>
    <DDLX>
-    <DDLNAME>ZC_MF911_01</DDLNAME>
-    <DDLANGUAGE>J</DDLANGUAGE>
-    <DDTEXT>Metadata Extensions for ZC_MF911_01</DDTEXT>
+    <METADATA>
+     <NAME>ZC_MF911_01</NAME>
+     <DESCRIPTION>ZC_MF911_01 のメタデータ拡張</DESCRIPTION>
+     <MASTER_LANGUAGE>JA</MASTER_LANGUAGE>
+    </METADATA>
    </DDLX>
   </asx:values>
  </asx:abap>
