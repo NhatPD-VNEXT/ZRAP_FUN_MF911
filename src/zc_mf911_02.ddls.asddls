@@ -16,9 +16,13 @@ define view entity ZC_MF911_02
       Supplier,
       Material,
       Plant,
+      @Semantics.quantity.unitOfMeasure: 'PurchaseOrderQuantityUnit'
       OrderQuantity,
+      @Semantics.unitOfMeasure: true
       PurchaseOrderQuantityUnit,
+      @Semantics.amount.currencyCode: 'DocumentCurrency'
       NetPriceAmount,
+      @Semantics.currencyCode: true
       DocumentCurrency,
       Status,
       Message,
