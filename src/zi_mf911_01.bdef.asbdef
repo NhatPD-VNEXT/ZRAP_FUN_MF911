@@ -1,0 +1,92 @@
+managed implementation in class zbp_i_mf911_01 unique;
+strict ( 2 );
+with draft;
+
+define behavior for ZI_MF911_01 alias Header
+persistent table zmf910
+draft table zmf910_d
+lock master
+total etag LastUpdatedAt
+authorization master ( instance, global )
+etag master LocalLastUpdatedAt
+{
+  create ( authorization : global );
+  update;
+  delete ( precheck );
+
+  field ( numbering : managed ) AttachmentUUID;
+  field ( readonly )
+    AttachmentUUID,
+    TotalCount, SuccessCount, WarningCount, ErrorCount,
+    CreatedBy, CreatedAt,
+    LastUpdatedBy, LastUpdatedAt, LocalLastUpdatedAt;
+
+  draft action ( features : instance ) Edit;
+  draft action Activate optimized;
+  draft action Discard;
+  draft action Resume;
+  draft determine action Prepare { validation vldBeforeSave; }
+
+  determination getDataFile on modify { field Attachment; }
+  determination updateBusinessObject on save { create; }
+  validation vldBeforeSave on save { create; update; }
+
+  association _Item { create; with draft; }
+
+  side effects
+  {
+    field Attachment affects
+        entity _Item, messages, $self;
+  }
+
+  mapping for zmf910
+    {
+      AttachmentUUID     = attachment_uuid;
+      Attachment         = attachment;
+      Mimetype           = mimetype;
+      FileName           = file_name;
+      TotalCount         = total_count;
+      SuccessCount       = success_count;
+      WarningCount       = warning_count;
+      ErrorCount         = error_count;
+      CreatedBy          = created_by;
+      CreatedAt          = created_at;
+      LastUpdatedBy      = last_updated_by;
+      LastUpdatedAt      = last_updated_at;
+      LocalLastUpdatedAt = local_last_updated_at;
+    }
+}
+
+define behavior for ZI_MF911_02 alias Item
+persistent table zmf911
+draft table zmf911_d
+lock dependent by _header
+authorization dependent by _header
+{
+  update;
+  delete;
+  field ( readonly ) AttachmentUUID, ItemUUID;
+  field ( numbering : managed ) ItemUUID;
+
+  association _header { with draft; }
+
+  mapping for zmf911
+    {
+      AttachmentUUID          = attachment_uuid;
+      ItemUUID                = item_uuid;
+      Group                   = group;
+      PurchaseOrderItem       = purchase_order_item;
+      PurchaseDocumentType    = purchase_document_type;
+      CompanyCode             = company_code;
+      PurchasingOrganization  = purchasing_org;
+      PurchasingGroup         = purchasing_group;
+      Supplier                = supplier;
+      Material                = material;
+      Plant                   = plant;
+      OrderQuantity           = order_quantity;
+      NetPriceAmount          = net_price_amount;
+      Status                  = status;
+      Message                 = message;
+      Criticality             = criticality;
+    }
+}

@@ -1,0 +1,5 @@
+@EndUserText.label: 'ZSD_MF911_01'
+define service ZSD_MF911_01 {
+  expose ZC_MF911_01 as Header;
+  expose ZC_MF911_02 as Item;
+}
