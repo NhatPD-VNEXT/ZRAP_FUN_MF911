@@ -15,7 +15,7 @@ CLASS zcl_mf911_01 DEFINITION
   PUBLIC SECTION.
     " ★ CSV file layout — field order must match CSV column order exactly ★
     TYPES: BEGIN OF gts_file_line,
-             group                  TYPE zi_mf911_02-group,
+             po_group               TYPE zi_mf911_02-pogroup,
              purchase_order_item    TYPE zi_mf911_02-purchaseorderitem,
              purchase_document_type TYPE zi_mf911_02-purchasedocumenttype,
              company_code           TYPE zi_mf911_02-companycode,
@@ -24,14 +24,16 @@ CLASS zcl_mf911_01 DEFINITION
              supplier               TYPE zi_mf911_02-supplier,
              material               TYPE zi_mf911_02-material,
              plant                  TYPE zi_mf911_02-plant,
-             order_quantity         TYPE zi_mf911_02-orderquantity,
-             net_price_amount       TYPE zi_mf911_02-netpriceamount,
+             order_quantity                TYPE zi_mf911_02-orderquantity,
+             purchase_order_quantity_unit  TYPE zi_mf911_02-purchaseorderquantityunit,
+             net_price_amount              TYPE zi_mf911_02-netpriceamount,
+             document_currency             TYPE zi_mf911_02-documentcurrency,
            END OF gts_file_line,
            gtt_file_data TYPE STANDARD TABLE OF gts_file_line WITH EMPTY KEY.
 
     " ★ Item sub-type for processing ★
     TYPES: BEGIN OF gts_item_line,
-             group                  TYPE zi_mf911_02-group,
+             po_group               TYPE zi_mf911_02-pogroup,
              purchase_order_item    TYPE zi_mf911_02-purchaseorderitem,
              purchase_document_type TYPE zi_mf911_02-purchasedocumenttype,
              company_code           TYPE zi_mf911_02-companycode,
@@ -40,16 +42,18 @@ CLASS zcl_mf911_01 DEFINITION
              supplier               TYPE zi_mf911_02-supplier,
              material               TYPE zi_mf911_02-material,
              plant                  TYPE zi_mf911_02-plant,
-             order_quantity         TYPE zi_mf911_02-orderquantity,
-             net_price_amount       TYPE zi_mf911_02-netpriceamount,
-             item_uuid              TYPE zi_mf911_02-itemuuid,
+             order_quantity                TYPE zi_mf911_02-orderquantity,
+             purchase_order_quantity_unit  TYPE zi_mf911_02-purchaseorderquantityunit,
+             net_price_amount              TYPE zi_mf911_02-netpriceamount,
+             document_currency             TYPE zi_mf911_02-documentcurrency,
+             item_uuid                     TYPE zi_mf911_02-itemuuid,
            END OF gts_item_line,
            gtt_item_data TYPE STANDARD TABLE OF gts_item_line WITH EMPTY KEY.
 
     " ★ Processing data (one row per parallel execution unit = one PO group) ★
     TYPES: BEGIN OF gts_data,
              cid         TYPE abp_behv_cid,
-             group       TYPE zi_mf911_02-group,
+             po_group    TYPE zi_mf911_02-pogroup,
              items       TYPE gtt_item_data,
              status      TYPE zi_mf911_02-status,
              message     TYPE zi_mf911_02-message,
@@ -95,7 +99,7 @@ ENDCLASS.
 CLASS zcl_mf911_01 IMPLEMENTATION.
 
   METHOD convert_data_file.
-    rs_import_detail-group                  = is_data-group.
+    rs_import_detail-pogroup                = is_data-po_group.
     rs_import_detail-purchaseorderitem      = is_data-purchase_order_item.
     rs_import_detail-purchasedocumenttype   = is_data-purchase_document_type.
     rs_import_detail-companycode            = is_data-company_code.
@@ -104,8 +108,10 @@ CLASS zcl_mf911_01 IMPLEMENTATION.
     rs_import_detail-supplier               = is_data-supplier.
     rs_import_detail-material               = is_data-material.
     rs_import_detail-plant                  = is_data-plant.
-    rs_import_detail-orderquantity          = is_data-order_quantity.
-    rs_import_detail-netpriceamount         = is_data-net_price_amount.
+    rs_import_detail-orderquantity               = is_data-order_quantity.
+    rs_import_detail-purchaseorderquantityunit   = is_data-purchase_order_quantity_unit.
+    rs_import_detail-netpriceamount              = is_data-net_price_amount.
+    rs_import_detail-documentcurrency            = is_data-document_currency.
   ENDMETHOD.
 
   METHOD do.
@@ -162,17 +168,21 @@ CLASS zcl_mf911_01 IMPLEMENTATION.
                  Material
                  Plant
                  OrderQuantity
-                 NetPriceAmount )
+                 PurchaseOrderQuantityUnit
+                 NetPriceAmount
+                 DocumentCurrency )
         WITH VALUE #(
           FOR idx = 1 THEN idx + 1 WHILE idx <= lines( is_input-data-items )
           LET ls_it = is_input-data-items[ idx ] IN (
-            %cid_ref          = lv_cid_po
-            %cid              = |ITEM_{ lv_cid_po }_{ idx }|
-            PurchaseOrderItem = ls_it-purchase_order_item
-            Material          = ls_it-material
-            Plant             = ls_it-plant
-            OrderQuantity     = ls_it-order_quantity
-            NetPriceAmount    = ls_it-net_price_amount
+            %cid_ref                   = lv_cid_po
+            %cid                       = |ITEM_{ lv_cid_po }_{ idx }|
+            PurchaseOrderItem          = ls_it-purchase_order_item
+            Material                   = ls_it-material
+            Plant                      = ls_it-plant
+            OrderQuantity              = ls_it-order_quantity
+            PurchaseOrderQuantityUnit  = ls_it-purchase_order_quantity_unit
+            NetPriceAmount             = ls_it-net_price_amount
+            DocumentCurrency           = ls_it-document_currency
           ) )
       REPORTED DATA(ls_reported)
       FAILED   DATA(ls_failed)

@@ -14,9 +14,9 @@ annotate entity ZC_MF911_02 with
   @UI.hidden: true
   ItemUUID;
 
-  @EndUserText.label: '{@i18n>Group}'
+  @EndUserText.label: '{@i18n>PoGroup}'
   @UI.lineItem: [{ position: 10 }]
-  Group;
+  PoGroup;
 
   @EndUserText.label: '{@i18n>PurchaseOrderItem}'
   @UI.lineItem: [{ position: 20 }]
@@ -54,9 +54,17 @@ annotate entity ZC_MF911_02 with
   @UI.lineItem: [{ position: 100 }]
   OrderQuantity;
 
+  @EndUserText.label: '{@i18n>PurchaseOrderQuantityUnit}'
+  @UI.lineItem: [{ position: 105 }]
+  PurchaseOrderQuantityUnit;
+
   @EndUserText.label: '{@i18n>NetPriceAmount}'
   @UI.lineItem: [{ position: 110 }]
   NetPriceAmount;
+
+  @EndUserText.label: '{@i18n>DocumentCurrency}'
+  @UI.lineItem: [{ position: 115 }]
+  DocumentCurrency;
 
   @EndUserText.label: '{@i18n>Status}'
   @UI.lineItem: [{ position: 120, criticality: 'Criticality' }]

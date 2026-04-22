@@ -75,7 +75,7 @@ authorization dependent by _header
     {
       AttachmentUUID         = attachment_uuid;
       ItemUUID               = item_uuid;
-      Group                  = group;
+      PoGroup                = po_group;
       PurchaseOrderItem      = purchase_order_item;
       PurchaseDocumentType   = purchase_document_type;
       CompanyCode            = company_code;
@@ -84,9 +84,11 @@ authorization dependent by _header
       Supplier               = supplier;
       Material               = material;
       Plant                  = plant;
-      OrderQuantity          = order_quantity;
-      NetPriceAmount         = net_price_amount;
-      Status                 = status;
+      OrderQuantity                = order_quantity;
+      PurchaseOrderQuantityUnit    = purchase_order_quantity_unit;
+      NetPriceAmount               = net_price_amount;
+      DocumentCurrency             = document_currency;
+      Status                       = status;
       Message                = message;
       Criticality            = criticality;
     }

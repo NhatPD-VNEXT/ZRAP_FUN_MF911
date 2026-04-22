@@ -7,7 +7,7 @@ define view entity ZC_MF911_02
 {
   key AttachmentUUID,
   key ItemUUID,
-      Group,
+      PoGroup,
       PurchaseOrderItem,
       PurchaseDocumentType,
       CompanyCode,
@@ -17,7 +17,9 @@ define view entity ZC_MF911_02
       Material,
       Plant,
       OrderQuantity,
+      PurchaseOrderQuantityUnit,
       NetPriceAmount,
+      DocumentCurrency,
       Status,
       Message,
       Criticality,

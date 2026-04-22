@@ -108,7 +108,7 @@ CLASS lhc_header IMPLEMENTATION.
           %cid              = |ITEM_{ sy-tabix }|
           %is_draft         = if_abap_behv=>mk-on
           AttachmentUUID    = ls_header-AttachmentUUID
-          Group             = zcl_mf911_01=>convert_data_file( ls_file_line )-Group
+          PoGroup           = zcl_mf911_01=>convert_data_file( ls_file_line )-PoGroup
           PurchaseOrderItem = zcl_mf911_01=>convert_data_file( ls_file_line )-PurchaseOrderItem
           " TODO: map all fields
         ) TO lt_item_create.
@@ -119,9 +119,11 @@ CLASS lhc_header IMPLEMENTATION.
         MODIFY ENTITIES OF zi_mf911_01 IN LOCAL MODE
           ENTITY header
             CREATE BY \_item
-            FIELDS ( Group PurchaseOrderItem PurchaseDocumentType
+            FIELDS ( PoGroup PurchaseOrderItem PurchaseDocumentType
                      CompanyCode PurchasingOrganization PurchasingGroup
-                     Supplier Material Plant OrderQuantity NetPriceAmount )
+                     Supplier Material Plant
+                     OrderQuantity PurchaseOrderQuantityUnit
+                     NetPriceAmount DocumentCurrency )
             WITH VALUE #( (
               %tky        = ls_header-%tky
               %target     = lt_item_create
@@ -153,7 +155,7 @@ CLASS lhc_header IMPLEMENTATION.
       " Step 3: Group items by Group field and dispatch parallel BOI calls
       DATA(lt_groups) = VALUE string_table( ).
       LOOP AT lt_items INTO DATA(ls_item).
-        COLLECT ls_item-Group INTO lt_groups.
+        COLLECT ls_item-PoGroup INTO lt_groups.
       ENDLOOP.
 
       DATA(lv_success) = 0.
@@ -161,9 +163,9 @@ CLASS lhc_header IMPLEMENTATION.
 
       LOOP AT lt_groups INTO DATA(lv_group).
         DATA(lt_group_items) = VALUE zcl_mf911_01=>gtt_data(
-          FOR ls IN lt_items WHERE ( Group = lv_group )
-            ( cid   = |CID_{ sy-tabix }|
-              group = ls-Group
+          FOR ls IN lt_items WHERE ( PoGroup = lv_group )
+            ( cid      = |CID_{ sy-tabix }|
+              po_group = ls-PoGroup
               " TODO: populate item sub-table from ls fields
             ) ).
 

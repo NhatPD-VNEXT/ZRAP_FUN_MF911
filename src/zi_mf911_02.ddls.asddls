@@ -8,7 +8,7 @@ define view entity ZI_MF911_02
 {
   key attachment_uuid        as AttachmentUUID,
   key item_uuid              as ItemUUID,
-      group                  as Group,
+      po_group               as PoGroup,
       purchase_order_item    as PurchaseOrderItem,
       purchase_document_type as PurchaseDocumentType,
       company_code           as CompanyCode,
@@ -17,8 +17,12 @@ define view entity ZI_MF911_02
       supplier               as Supplier,
       material               as Material,
       plant                  as Plant,
-      order_quantity         as OrderQuantity,
-      net_price_amount       as NetPriceAmount,
+      @Semantics.quantity.unitOfMeasure: 'PurchaseOrderQuantityUnit'
+      order_quantity                    as OrderQuantity,
+      purchase_order_quantity_unit      as PurchaseOrderQuantityUnit,
+      @Semantics.amount.currencyCode: 'DocumentCurrency'
+      net_price_amount                  as NetPriceAmount,
+      document_currency                 as DocumentCurrency,
       status                 as Status,
       message                as Message,
       criticality            as Criticality,
