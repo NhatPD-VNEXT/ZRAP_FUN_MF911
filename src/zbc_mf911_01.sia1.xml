@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_SIA1" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <SIA1>
+    <METADATA>
+     <NAME>ZBC_MF911_01</NAME>
+     <MASTER_LANGUAGE>JA</MASTER_LANGUAGE>
+     <DESCRIPTION>購買発注ファイルアップロード Business Catalog</DESCRIPTION>
+    </METADATA>
+    <CONTENT>
+     <GROUP_ID>ZBC_MF911_01</GROUP_ID>
+     <TITLE>購買発注ファイルアップロード</TITLE>
+    </CONTENT>
+   </SIA1>
+  </asx:values>
+ </asx:abap>
+</abapGit>

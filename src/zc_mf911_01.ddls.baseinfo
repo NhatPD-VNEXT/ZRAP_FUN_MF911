@@ -1,0 +1,5 @@
+---
+base-class: CL_DD_DDL_HANDLER
+object-type: DDLS
+object-name: ZC_MF911_01
+program-type: I

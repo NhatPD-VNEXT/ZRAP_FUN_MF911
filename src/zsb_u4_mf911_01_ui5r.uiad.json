@@ -1,0 +1,10 @@
+{
+  "schemaVersion": "3.2.0",
+  "id": "ZSB_U4_MF911_01_UI5R",
+  "reference": "ZSB_U4_MF911_01",
+  "namespace": "sap.fe.MF911",
+  "layer": "CUSTOMER_BASE",
+  "creation": {
+    "appDescriptorChanges": []
+  }
+}

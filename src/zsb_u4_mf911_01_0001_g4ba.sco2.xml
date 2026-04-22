@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_SCO2" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <SCO2>
+    <METADATA>
+     <NAME>ZSB_U4_MF911_01_0001_G4BA</NAME>
+     <MASTER_LANGUAGE>JA</MASTER_LANGUAGE>
+     <DESCRIPTION>購買発注ファイルアップロード Service Scope</DESCRIPTION>
+    </METADATA>
+    <CONTENT>
+     <SERVICE_BINDING>ZSB_U4_MF911_01</SERVICE_BINDING>
+     <SERVICE_VERSION>0001</SERVICE_VERSION>
+     <IAM_EXTENSION>ZIAM_U4_MF911_01_EXT</IAM_EXTENSION>
+    </CONTENT>
+   </SCO2>
+  </asx:values>
+ </asx:abap>
+</abapGit>

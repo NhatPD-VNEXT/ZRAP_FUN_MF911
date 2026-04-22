@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_SIA6" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <SIA6>
+    <METADATA>
+     <NAME>ZIAM_U4_MF911_01_EXT</NAME>
+     <MASTER_LANGUAGE>JA</MASTER_LANGUAGE>
+     <DESCRIPTION>購買発注ファイルアップロード IAM Extension</DESCRIPTION>
+    </METADATA>
+    <CONTENT>
+     <SERVICE_BINDING>ZSB_U4_MF911_01</SERVICE_BINDING>
+     <SERVICE_VERSION>0001</SERVICE_VERSION>
+    </CONTENT>
+   </SIA6>
+  </asx:values>
+ </asx:abap>
+</abapGit>
