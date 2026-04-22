@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_SCO2" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <DATA>
+    <SCOPE_ID>ZSB_U4_MF901_01_0001_G4BA</SCOPE_ID>
+    <BINDING_NAME>ZSB_U4_MF901_01</BINDING_NAME>
+    <SERVICE_VERSION>0001</SERVICE_VERSION>
+    <LANGUAGE>JA</LANGUAGE>
+    <MASTER_LANGUAGE>JA</MASTER_LANGUAGE>
+   </DATA>
+  </asx:values>
+ </asx:abap>
+</abapGit>

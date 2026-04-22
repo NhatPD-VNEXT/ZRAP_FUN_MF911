@@ -1,0 +1,84 @@
+@Metadata.layer: #CORE
+@UI: {
+  headerInfo: {
+    typeName: '{@i18n>Header}',
+    typeNamePlural: '{@i18n>Headers}',
+    title.value: 'FileName'
+  }
+}
+annotate entity ZC_MF901_01 with
+{
+  @UI.facet: [
+    { purpose: #HEADER,   type: #FIELDGROUP_REFERENCE, position: 10, targetQualifier: 'HeaderGroup' },
+    { id: 'AttachmentSection', purpose: #STANDARD, type: #COLLECTION,
+      label: '{@i18n>AttachmentSection}', position: 10 },
+    { purpose: #STANDARD, type: #FIELDGROUP_REFERENCE,
+      targetQualifier: 'AttachmentGroup', parentId: 'AttachmentSection', position: 10 },
+    { id: 'ResultSection', purpose: #STANDARD, type: #COLLECTION,
+      label: '{@i18n>ResultSection}', position: 20 },
+    { purpose: #STANDARD, type: #FIELDGROUP_REFERENCE,
+      targetQualifier: 'ResultGroup', parentId: 'ResultSection', position: 20 },
+    { purpose: #STANDARD, type: #LINEITEM_REFERENCE,
+      label: '{@i18n>ItemSection}', targetElement: '_Item', position: 30 }
+  ]
+
+  @EndUserText.label: '{@i18n>AttachmentUUID}'
+  @UI.fieldGroup: [{ qualifier: 'HeaderGroup', position: 10 }]
+  @UI.lineItem: [{ position: 10 }]
+  AttachmentUUID;
+
+  @UI.fieldGroup: [{ qualifier: 'AttachmentGroup', position: 10 }]
+  @UI.facet: [{ exclude: true }]
+  @UI.lineItem: [{ hidden: true }]
+  Attachment;
+
+  @EndUserText.label: '{@i18n>FileName}'
+  @UI.fieldGroup: [{ qualifier: 'HeaderGroup', position: 20 }]
+  @UI.lineItem: [{ position: 30 }]
+  @UI.selectionField: [{ position: 10 }]
+  FileName;
+
+  @EndUserText.label: '{@i18n>TotalCount}'
+  @UI.fieldGroup: [{ qualifier: 'ResultGroup', position: 10 }]
+  @UI.lineItem: [{ position: 40 }]
+  TotalCount;
+
+  @EndUserText.label: '{@i18n>SuccessCount}'
+  @UI.fieldGroup: [{ qualifier: 'ResultGroup', position: 20 }]
+  @UI.lineItem: [{ position: 50 }]
+  SuccessCount;
+
+  @EndUserText.label: '{@i18n>WarningCount}'
+  @UI.fieldGroup: [{ qualifier: 'ResultGroup', position: 30 }]
+  @UI.lineItem: [{ position: 60 }]
+  WarningCount;
+
+  @EndUserText.label: '{@i18n>ErrorCount}'
+  @UI.fieldGroup: [{ qualifier: 'ResultGroup', position: 40 }]
+  @UI.lineItem: [{ position: 70 }]
+  ErrorCount;
+
+  @EndUserText.label: '{@i18n>CreatedBy}'
+  @UI.fieldGroup: [{ qualifier: 'HeaderGroup', position: 30 }]
+  @UI.lineItem: [{ position: 80 }]
+  @UI.selectionField: [{ position: 20 }]
+  CreatedBy;
+
+  @EndUserText.label: '{@i18n>CreatedAt}'
+  @UI.fieldGroup: [{ qualifier: 'HeaderGroup', position: 40 }]
+  @UI.lineItem: [{ position: 90 }]
+  CreatedAt;
+
+  @EndUserText.label: '{@i18n>LastUpdatedBy}'
+  @UI.fieldGroup: [{ qualifier: 'HeaderGroup', position: 50 }]
+  @UI.lineItem: [{ position: 100 }]
+  LastUpdatedBy;
+
+  @EndUserText.label: '{@i18n>LastUpdatedAt}'
+  @UI.fieldGroup: [{ qualifier: 'HeaderGroup', position: 60 }]
+  @UI.lineItem: [{ position: 110 }]
+  LastUpdatedAt;
+
+  @UI.hidden: true
+  LocalLastUpdatedAt;
+}
