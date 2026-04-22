@@ -84,8 +84,8 @@ CLASS zcl_mf911_01 DEFINITION
 
     " Trigger parallel execution for one group
     METHODS execute_parallel
-      IMPORTING is_input        TYPE gts_parallel_input
-      RETURNING VALUE(rs_ouput) TYPE gts_parallel_output.
+      IMPORTING is_input   TYPE gts_parallel_input
+      EXPORTING es_output  TYPE gts_parallel_output.
 
     " Core BOI logic — MODIFY ENTITIES OF I_PurchaseOrderTP_2 + COMMIT ENTITIES
     METHODS main_process
@@ -115,28 +115,36 @@ CLASS zcl_mf911_01 IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD do.
-    " Deserialize input object → gts_parallel_input
     DATA: ls_input  TYPE gts_parallel_input,
           ls_output TYPE gts_parallel_output.
 
-    CAST cl_abap_parallel_input( input )->get( IMPORTING data = ls_input ).
+    IMPORT param_input = ls_input FROM DATA BUFFER p_in.
 
     ls_output = main_process( ls_input ).
 
-    CAST cl_abap_parallel_output( output )->set( ls_output ).
+    EXPORT param_output = ls_output TO DATA BUFFER p_out.
   ENDMETHOD.
 
   METHOD execute_parallel.
-    DATA(lo_input) = NEW cl_abap_parallel_input( ).
-    lo_input->set( is_input ).
+    DATA: ldf_xinput  TYPE LINE OF cl_abap_parallel=>t_in_tab,
+          ldt_xinput  TYPE cl_abap_parallel=>t_in_tab,
+          ldt_xoutput TYPE cl_abap_parallel=>t_out_tab,
+          lds_xoutput TYPE LINE OF cl_abap_parallel=>t_out_tab.
 
-    DATA(lo_output) = NEW cl_abap_parallel_output( ).
+    EXPORT param_input = is_input TO DATA BUFFER ldf_xinput.
+    APPEND ldf_xinput TO ldt_xinput.
 
-    me->run(
-      EXPORTING input  = lo_input
-      IMPORTING output = lo_output ).
+    run( EXPORTING p_in_tab  = ldt_xinput
+         IMPORTING p_out_tab = ldt_xoutput ).
 
-    CAST cl_abap_parallel_output( lo_output )->get( IMPORTING data = rs_ouput ).
+    IF ldt_xoutput IS NOT INITIAL.
+      lds_xoutput = ldt_xoutput[ 1 ].
+      TRY.
+          IMPORT param_output = es_output FROM DATA BUFFER lds_xoutput-result.
+        CATCH cx_root INTO FINAL(lo_error).
+          ASSERT 1 = 0.
+      ENDTRY.
+    ENDIF.
   ENDMETHOD.
 
   METHOD main_process.

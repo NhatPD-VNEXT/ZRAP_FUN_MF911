@@ -172,7 +172,10 @@ CLASS lhc_header IMPLEMENTATION.
         DATA(lo_zcl) = NEW zcl_mf911_01( ).
         DATA(ls_input) = VALUE zcl_mf911_01=>gts_parallel_input(
           data = lt_group_items[ 1 ] ).
-        DATA(ls_output) = lo_zcl->execute_parallel( ls_input ).
+        DATA ls_output TYPE zcl_mf911_01=>gts_parallel_output.
+        lo_zcl->execute_parallel(
+          EXPORTING is_input  = ls_input
+          IMPORTING es_output = ls_output ).
 
         " TODO: process ls_output — update item status/message/criticality,
         "        increment lv_success / lv_error counters
