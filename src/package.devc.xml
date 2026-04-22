@@ -4,6 +4,8 @@
   <asx:values>
    <DEVC>
     <CTEXT>ZRAP_FUN_MF911</CTEXT>
+   <LANGUAGE>J</LANGUAGE>
+   <MASTERLANG>J</MASTERLANG>
    </DEVC>
   </asx:values>
  </asx:abap>
